@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Trình tạo code app-item</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #f2f2f2;
+    }
+    h1 {
+      text-align: center;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 4px;
+      box-sizing: border-box;
+    }
+    textarea {
+      resize: vertical;
+    }
+    #result {
+      background: #fff;
+      padding: 15px;
+      margin-top: 20px;
+      border: 1px solid #ccc;
+      font-family: monospace;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Trình tạo mã App Item</h1>
+
+  <form id="appForm">
+    <label>1. Loại (data-category)</label>
+    <select id="category">
+      <option value="apps">Apps</option>
+      <option value="games">Games</option>
+    </select>
+
+    <label>2. ID (data-id)</label>
+    <input type="number" id="id" required>
+
+    <label>3. Tên ứng dụng (data-name)</label>
+    <input type="text" id="name" required>
+
+    <label>4. Phiên bản (data-version)</label>
+    <input type="text" id="version" required>
+
+    <label>5. Dung lượng (data-size)</label>
+    <input type="text" id="size" placeholder="Ví dụ: 85.2 MB" required>
+
+    <label>6. Icon (data-icon)</label>
+    <input type="url" id="icon" placeholder="https://..." required>
+
+    <label>7. Mô tả (data-description)</label>
+    <textarea id="description" rows="3" required></textarea>
+
+    <label>8. Link tải xuống (data-download-link)</label>
+    <input type="url" id="downloadLink" placeholder="https://..." required>
+  </form>
+
+  <h2>Kết quả:</h2>
+  <div id="result"></div>
+
+  <script>
+    const form = document.getElementById("appForm");
+    const result = document.getElementById("result");
+
+    function updateResult() {
+      const category = document.getElementById("category").value;
+      const id = document.getElementById("id").value;
+      const name = document.getElementById("name").value;
+      const version = document.getElementById("version").value;
+      const size = document.getElementById("size").value;
+      const icon = document.getElementById("icon").value;
+      const description = document.getElementById("description").value;
+      const downloadLink = document.getElementById("downloadLink").value;
+
+      const today = new Date().toISOString().split('T')[0]; // yyyy-mm-dd
+
+      const html = `<div class="app-item" 
+data-category="${category}" 
+data-id="${id}" 
+data-name="${name}" 
+data-version="${version}" 
+data-size="${size}" 
+data-added="${today}" 
+data-icon="${icon}" 
+data-description="${description}" 
+data-download-link="${downloadLink}"></div>`;
+
+      result.textContent = html;
+    }
+
+    form.addEventListener("input", updateResult);
+    window.addEventListener("load", updateResult);
+  </script>
+
+</body>
+</html>
