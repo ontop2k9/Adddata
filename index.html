@@ -35,7 +35,14 @@
       border: 1px solid #ccc;
       font-family: monospace;
       white-space: pre-wrap;
-      word-break: break-all;
+      word-break: break-word;
+    }
+    button {
+      display: block;
+      margin-top: 10px;
+      padding: 10px 20px;
+      font-weight: bold;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -74,6 +81,7 @@
 
   <h2>Kết quả:</h2>
   <div id="result"></div>
+  <button onclick="copyToClipboard()">📋 Copy Code</button>
 
   <script>
     const form = document.getElementById("appForm");
@@ -103,6 +111,15 @@ data-description="${description}"
 data-download-link="${downloadLink}"></div>`;
 
       result.textContent = html;
+    }
+
+    function copyToClipboard() {
+      const code = result.textContent;
+      navigator.clipboard.writeText(code).then(() => {
+        alert("✅ Đã sao chép đoạn code!");
+      }).catch(err => {
+        alert("❌ Sao chép thất bại: " + err);
+      });
     }
 
     form.addEventListener("input", updateResult);
